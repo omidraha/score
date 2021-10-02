@@ -1,7 +1,7 @@
 Intro
 =====
 
-This is a Github Score Application to rank repositories based on forks and starts.
+This is a GitHub Score Application to rank repositories based on forks and starts.
 
 
 Stack
@@ -9,62 +9,86 @@ Stack
 
 In this application we used:
 
-* Python
-* FastAPI
+* Python 3.9.7
+* FastAPI 0.68.1
+* Docker 20.10.8
+* Docker-compose 1.26.0
+* Docker-compose file version: 3.1
+* Gunicorn 20.1.0
+* uvicorn 0.15.0
 
+Images
+======
 
+* tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
-Install requirements
-====================
+More info:
 
-```bash
+* https://fastapi.tiangolo.com/deployment/docker/#official-docker-image-with-gunicorn-uvicorn
 
-$ pip install -r requirements.txt
+Backend topology
+=================
 
 ```
+gunicorn -> gunicorn worker -> uvicorn -> main.py
+```
+
+More info:
+
+* https://www.uvicorn.org/deployment/#gunicorn
+* https://www.uvicorn.org/#running-with-gunicorn
+
 
 Environments
 ============
 
-```bash
-
-$ export GITHUB_ACCESS_TOKEN="YOUR_GITHUB_ACCESS_TOKEN"
+Before run the app or run their tests, copy `example.env` as new `.env` file: 
 
 ```
+$ cp example.env .env
+```
 
-Run server
-==========
+Set the value of `GITHUB_ACCESS_TOKEN` to your valid GITHUB access token.
 
-```bash
+Run application
+===============
 
-$ uvicorn main:app
+Set `Environments` as previous section and then run the application:
 
 ```
+$ docker-compose -p score build
+$ docker-compose -p score up
+```
+
+For run in daemon, use `-d` if it's required:
+
+```
+$ docker-compose -p score up -d
+```
+
 
 Run tests
 =========
 
-```bash
+Set `Environments` as previous section and then:
 
-$ pytest
-
+```
+$ docker-compose -p test run --rm web pytest
 ```
 
 Browse
 ======
 
-    http://127.0.0.1:8000/docs
+    http://127.0.0.1/docs/
 
-    http://127.0.0.1:8000/score/
+    http://127.0.0.1/score/
 
 
 Curl
 ====
 
-```bash
-
-$ curl -X 'POST' 'http://127.0.0.1:8000/score/' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"repo":"python/cpython"}
-
+```
+$ curl -X 'POST' 'http://127.0.0.1/score/' -H 'accept: application/json' -H 'Content-Type: application/json' -d '{"repo":"python/cpython"}'
 ```
 
 TODO
@@ -74,8 +98,8 @@ TODO
     And maybe provide a new cache option for example `Cache-Control: no-cache` header to the `score` API
 
 
-Useful links
-============
+Extra useful links
+==================
 
 
 * https://fastapi.tiangolo.com/tutorial/metadata/
@@ -106,3 +130,5 @@ Useful links
 * https://fastapi.tiangolo.com/tutorial/body/
 * https://fastapi.tiangolo.com/tutorial/handling-errors/
 * https://gist.github.com/omidraha/72817ed0c6173f6c47613e3eebf03ad7
+* https://fastapi.tiangolo.com/deployment/docker/
+* https://github.com/tiangolo/uvicorn-gunicorn-fastapi-docker
