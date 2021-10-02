@@ -3,6 +3,9 @@ Intro
 
 This is a GitHub Score Application to rank repositories based on forks and starts.
 
+More info (Issues):
+
+* https://github.com/omidraha/score/issues
 
 Stack
 =====
@@ -12,7 +15,7 @@ In this application we used:
 * Python 3.9.7
 * FastAPI 0.68.1
 * Docker 20.10.8
-* Docker-compose 1.26.0
+* Docker-compose 1.29.2
 * Docker-compose file version: 3.1
 * Gunicorn 20.1.0
 * uvicorn 0.15.0
@@ -76,6 +79,29 @@ Set `Environments` as previous section and then:
 $ docker-compose -p test run --rm web pytest
 ```
 
+
+Health check
+============
+
+To see health check of service, use this command:
+
+```
+$ docker-compose -p score ps
+```
+
+Sample output:
+
+```
+score_web_1   /start.sh   Up (healthy)   0.0.0.0:80->80/tcp,:::80->80/tcp
+```
+
+To see logs of health check:
+
+```
+docker inspect --format='{{json .State.Health}}' score_web_1
+```
+
+
 Browse
 ======
 
@@ -94,8 +120,10 @@ $ curl -X 'POST' 'http://127.0.0.1/score/' -H 'accept: application/json' -H 'Con
 TODO
 ====
 
-    Cache external service API response for some short period of time for example for 1 hour in the Redis,
+* Cache external `GitHub` service API response for some short period of the time for example for 1 hour in the Redis,
     And maybe provide a new cache option for example `Cache-Control: no-cache` header to the `score` API
+
+* Use async library for communicate with `Github` service API 
 
 
 Extra useful links
