@@ -6,7 +6,7 @@ Sample `FastAPI` app to demostrate how to use `FastAPI`
 
 About
 =====
-This is a GitHub Score Application to rank repositories based on forks and starts.
+This is a GitHub Score Application to rank repositories based on forks and stars.
 
 More info (Issues):
 
@@ -21,7 +21,7 @@ In this application we used:
 * FastAPI 0.68.1
 * Docker 20.10.8
 * Docker-compose 1.29.2
-* Docker-compose file version: 3.1
+* Docker-compose file version: 3.4
 * Gunicorn 20.1.0
 * uvicorn 0.15.0
 
