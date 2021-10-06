@@ -1,6 +1,11 @@
 Intro
 =====
 
+Sample `FastAPI` app to demostrate how to use `FastAPI`
+
+
+About
+=====
 This is a GitHub Score Application to rank repositories based on forks and starts.
 
 More info (Issues):
